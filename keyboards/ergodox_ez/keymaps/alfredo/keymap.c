@@ -309,7 +309,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		break;
     case AUTO_LIKE:
 		if (record->event.pressed) {
-			SEND_STRING("like '%%'"SS_TAP(X_LEFT)SS_TAP(X_LEFT));
+			SEND_STRING("like ''"SS_TAP(X_LEFT)"%%"SS_TAP(X_LEFT));
 		}
 		return false;
 		break;    
