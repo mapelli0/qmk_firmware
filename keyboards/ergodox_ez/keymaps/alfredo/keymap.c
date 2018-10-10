@@ -1,14 +1,22 @@
-#include "ergodox_ez.h"
-#include "debug.h"
-#include "action_layer.h"
+
 #include "version.h"
 
 
-#include "keymap_german.h"
+#include QMK_KEYBOARD_H
 
-#include "keymap_nordic.h"
+#include "debug.h"
+#include "action_layer.h"
+
+// #include "keymap_german.h"
+
+// #include "keymap_nordic.h"
+
 #define ___     KC_TRNS
 #define M_SQLRUNLINE M(0)
+#define BASE   		0  // Base layer - QWERTY
+#define FCONTROLS   1  // Special keys favoring programming in c-like languages
+#define MOUSE   	2  // Special keys favoring programming in c-like languages
+
 
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
@@ -21,7 +29,7 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [0] = KEYMAP(
+  [BASE] = LAYOUT_ergodox(
 
     // Left side
         /*=================================================================================================================*/
@@ -102,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	
 	
 	
-	[1] = KEYMAP(
+	[FCONTROLS] = LAYOUT_ergodox(
 
     // Left side
         /*=================================================================================================================*/
@@ -181,7 +189,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*===================================================*/
     ),
 	
-	[2] = KEYMAP(
+	[MOUSE] = LAYOUT_ergodox(
 
     // Left side
         /*====================================================================================================================*/
@@ -273,7 +281,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case 0:
         if (record->event.pressed) {
           //SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-		  return MACRO(T(HOME), D(LSFT),T(END),U(LSFT), END); 
+		  return MACRO(T(HOME), D(LSFT),T(END),U(LSFT), T(F5), END); 
         }
         break;
       }
