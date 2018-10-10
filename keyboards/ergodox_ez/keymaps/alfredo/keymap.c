@@ -16,7 +16,8 @@ enum custom_keycodes {
   VRSN,
   LINQ_ARROW,
   AUTO_LIKE,
-  SQL_SELECT
+  SQL_SELECT,
+  SQL_RUNLINE
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -115,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /**/           		/**/           /**/           /**/           /**/           /**/           	/**/           	/**/
         /*================================================================================================*/       		/**/
         /**/           		/**/           /**/           /**/           /**/           /**/           	/**/           	/**/
-        /**/  SQL_SELECT,	/**/   ___,    /**/   ___,    /**/   ___,    /**/   ___,    /**/   ___,   	/*================*/
+        /**/  ___,			/**/   ___,    /**/SQL_SELECT,/**/   ___,    /**/   ___,    /**/   ___,   	/*================*/
         /**/           		/**/           /**/           /**/           /**/           /**/           	/**/           	/**/
         /*================================================================================================*/      		/**/
         /**/           		/**/            /**/           /**/           /**/          /**/           	/**/           	/**/
@@ -316,6 +317,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	case SQL_SELECT:
 		if (record->event.pressed) {
 			SEND_STRING("Select * from ");
+		}
+		return false;
+		break;
+	case SQL_RUNLINE:
+		if(record->event.pressed) {
+			SS_TAP(KC_END);RSFT(KC_HOME);SS_TAP(KC_F5);
 		}
 		return false;
 		break;
