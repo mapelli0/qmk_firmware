@@ -8,7 +8,7 @@
 
 #include "keymap_nordic.h"
 #define ___     KC_TRNS
-
+#define M_SQLRUNLINE M(0)
 
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
@@ -16,8 +16,7 @@ enum custom_keycodes {
   VRSN,
   LINQ_ARROW,
   AUTO_LIKE,
-  SQL_SELECT,
-  SQL_RUNLINE
+  SQL_SELECT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -226,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //
                     /*=============================================================================================================================*/
                     /**/                    /**/           /**/           /**/           /**/      		/**/           		 /**/				 /**/
-                    /**/		___,  		/**/   ___,   /**/   ___,    /**/   ___,     /**/   ___,    /**/   ___,  		 /**/		VRSN,  	 /**/
+                    /**/		___,  		/**/   ___,   /**/   ___,    /**/   ___,     /**/   ___,    /**/   ___,  		 /**/	M_SQLRUNLINE,/**/
                     /**/           			/**/          /**/           /**/           /**/            /**/           		 /**/          		 /**/
                     /*=============================================================================================================================*/
                     /**/           			/**/           /**/           /**/           /**/           /**/           		/**/           		 /**/
@@ -256,7 +255,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /**/           /**/           	/**/           /**/
         /*===============*/           	/**/           /**/
         /**/           /**/           	/**/           /**/
-        /**/	___,   /**/    ___, 	/**/ 	___    /**/
+        /**/   VRSN,   /**/    ___, 	/**/ 	___    /**/
         /**/           /**/          	/**/           /**/
         /*===============================================*/
     ),
@@ -273,7 +272,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
       switch(id) {
         case 0:
         if (record->event.pressed) {
-          SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+          //SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+		  return MACRO(T(HOME), D(LSFT),T(END),U(LSFT), END); 
         }
         break;
       }
@@ -320,12 +320,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 		return false;
 		break;
-	case SQL_RUNLINE:
-		if(record->event.pressed) {
-			SS_TAP(KC_END);RSFT(KC_HOME);SS_TAP(KC_F5);
-		}
-		return false;
-		break;
+	// case SQL_RUNLINE:
+		// if(record->event.pressed) {
+			// SS_TAP(X_END)LSFT(KC_HOME)KC_F5;
+		// }
+		// return false;
+		// break;
   }
   return true;
 }
