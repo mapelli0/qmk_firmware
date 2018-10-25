@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     /**/           /**/           /**/           /**/           /**/           /**/           		/**/           		 /**/
                     /**/           /*======================================================================================================*/
                     /**/           /**/           /**/           /**/           /**/           /**/           		/**/           		 /**/
-                    /**/  ___, 	   /**/   KC_N,   /**/   KC_M,   /**/ KC_COMMA, /**/  KC_DOT,  /**/CTL_T(KC_SLASH), /**/    KC_RSHIFT,   /**/
+                    /**/  KC_LEAD, /**/   KC_N,   /**/   KC_M,   /**/ KC_COMMA, /**/  KC_DOT,  /**/CTL_T(KC_SLASH), /**/    KC_RSHIFT,   /**/
                     /**/           /**/           /**/           /**/           /**/           /**/           		/**/           		 /**/
                     /*=====================================================================================================================*/
                                                   /**/           /**/           /**/           		/**/           		/**/       	 	 /**/
@@ -166,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     /**/           			/**/           /**/           /**/           /**/           /**/           		/**/           		 /**/
                     /**/           			/*======================================================================================================*/
                     /**/           			/**/           /**/           /**/           /**/           /**/           		/**/           		 /**/
-                    /**/  TO(0), 	   		/**/   KC_1,   /**/   KC_2,   /**/ KC_3,	 /**/  ___,  	/**/CTL_T(KC_SLASH),/**/    ___,   		 /**/
+                    /**/  ___,		   		/**/   KC_1,   /**/   KC_2,   /**/ KC_3,	 /**/  ___,  	/**/CTL_T(KC_SLASH),/**/    ___,   		 /**/
                     /**/           			/**/           /**/           /**/           /**/           /**/           		/**/           		 /**/
                     /*=====================================================================================================================*/
                                                   /**/           /**/           /**/           		/**/           		/**/       	 	 /**/
@@ -288,6 +288,43 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     return MACRO_NONE;
 };
 
+LEADER_EXTERNS();
+void matrix_scan_user(void){
+	LEADER_DICTIONARY(){
+		leading = false;
+		leader_end();
+		SEQ_TWO_KEYS(KC_G, KC_A) {
+			SEND_STRING("git add .");
+		}
+		SEQ_TWO_KEYS(KC_G, KC_M) {
+			SEND_STRING("git commit -m \"\""SS_TAP(X_LEFT)"#");
+		}
+		SEQ_TWO_KEYS(KC_G, KC_C) {
+			SEND_STRING("git checkout ");
+		}
+		SEQ_TWO_KEYS(KC_G, KC_P) {
+			SEND_STRING("git push");
+		}
+		SEQ_TWO_KEYS(KC_G, KC_F) {
+			SEND_STRING("git fetch");
+		}
+		SEQ_THREE_KEYS(KC_G, KC_P, KC_P) {
+			SEND_STRING("git fetch; git pull");
+		}
+		SEQ_TWO_KEYS(KC_S, KC_S) {
+			SEND_STRING("Select * from ");
+		}
+		SEQ_TWO_KEYS(KC_S, KC_L) {
+			SEND_STRING("like ''"SS_TAP(X_LEFT)"%%"SS_TAP(X_LEFT));
+		}
+		
+		SEQ_TWO_KEYS(KC_S, KC_D) {
+			SEND_STRING("delete from ");
+		}
+  }
+}
+
+
 void matrix_init_user(void) {
 #ifdef RGBLIGHT_COLOR_LAYER_0
   rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
@@ -328,12 +365,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 		return false;
 		break;
-	// case SQL_RUNLINE:
-		// if(record->event.pressed) {
-			// SS_TAP(X_END)LSFT(KC_HOME)KC_F5;
-		// }
-		// return false;
-		// break;
   }
   return true;
 }
