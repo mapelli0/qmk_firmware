@@ -135,7 +135,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_MACRO
 //#define NO_ACTION_FUNCTION
 //#define DEBUG_MATRIX_SCAN_RATE
-
-#define LEADER_TIMEOUT 700
+#define LEADER_PER_KEY_TIMING
+#define LEADER_TIMEOUT 300
 
 #endif
